@@ -5,11 +5,6 @@ class Welcome extends Users_Controller {
 	public function index(){
 		if(!@$this->user) redirect('welcome/login');
 
-		$data = array(
-			'content' => 'home',
-			'user' => $this->users->get_profile_user($this->user->email)
-		);
-
 		$config = array(
 			'upload_path' => './pictures/',
 			'allowed_types' => 'gif|jpg|jpeg|png',
@@ -18,7 +13,6 @@ class Welcome extends Users_Controller {
 			'max_height' => '200'
 		);
 		$this->load->library('upload',$config);
-
 
 		$this->form_validation->set_rules('email', 'E-mail', 'required');
 		$this->form_validation->set_message('required', '<span class="alert label">The field %s is required</span>');
@@ -33,26 +27,32 @@ class Welcome extends Users_Controller {
 				}
 
 				$user = array(
-					'name' => $_POST['name'],
-					'last_name' => $_POST['last_name'],
+					'name' => !empty($_POST['name']) ? $_POST['name'] : '',
+					'last_name' => !empty($_POST['last_name']) ? $_POST['last_name'] : '',
 					'email' => $_POST['email'],
-					'picture' => isset($picture['file_name']) ? $picture['file_name'] : '',
-					'birthday' => $_POST['birthday'],
-					'gender' => isset($_POST['gender']) ? $_POST['gender'] : '' ,
-					'city' => $_POST['city'],
-					'occupation' => $_POST['occupation'],
-					'phone' => $_POST['phone'],
-					'address' => $_POST['address']
+					'picture' => !empty($picture['file_name']) ? $picture['file_name'] : '',
+					'birthday' => !empty($_POST['birthday']) ? $_POST['birthday'] : null,
+					'gender' => !empty($_POST['gender']) ? $_POST['gender'] : '' ,
+					'city' => !empty($_POST['city']) ? $_POST['city'] : '',
+					'occupation' => !empty($_POST['occupation']) ? $_POST['occupation'] : '',
+					'phone' => !empty($_POST['phone']) ? $_POST['phone'] : null,
+					'address' => !empty($_POST['address']) ? $_POST['address'] : ''
 				);
 				$this->users->update_user($user);
 				
 			}
 		}
 
+		$data = array(
+			'content' => 'home',
+			'user' => $this->users->get_profile_user($this->user->email)
+		);
+
 		$this->load->view('base', $data);
 	}
 	
 	public function login(){
+		if(@$this->user) redirect('/');
 
 		$data = array();
 
@@ -67,7 +67,7 @@ class Welcome extends Users_Controller {
 
 				if($logged_user){
 					$this->session->set_userdata('logged_user', $logged_user);
-					redirect('welcome/index');
+					redirect('/');
 				}else {
 					$data['error_login'] = true;
 				}
@@ -79,11 +79,11 @@ class Welcome extends Users_Controller {
 
 	public function logout(){
 		$this->session->unset_userdata('logged_user');
-		redirect('welcome/index');
+		redirect('welcome/login');
 	}
 
 	public function create_account(){
-		if(@$this->user) redirect('welcome/login');
+		if(@$this->user) redirect('/');
 		$data = array();
 
 		$this->form_validation->set_rules('email', 'E-mail', 'required');

@@ -47,7 +47,7 @@
               <label for="birthday">Birthday: </label>
             </div>
             <div class="large-8 columns">
-              <input type="text" name="birthday" value="<?php echo $user->birthday; ?>">
+              <input type="date" name="birthday" value="<?php echo date('Y-m-d',strtotime($user->birthday)); ?>">
             </div>
           </div>
           <div class="row">
@@ -55,9 +55,9 @@
               <label for="genger">Gender: </label>
             </div>
             <div class="large-8 columns">
-              <input type="radio" name="gender" value="male"> Male
-              <input type="radio" name="gender" value="female"> Female
-              <input type="radio" name="gender" value="other"> Other
+              <input type="radio" name="gender" value="male" <?php if($user->gender == 'male') echo 'checked="checked"'; ?>> Male
+              <input type="radio" name="gender" value="female" <?php if($user->gender == 'female') echo 'checked="checked"'; ?>> Female
+              <input type="radio" name="gender" value="other" <?php if($user->gender == 'other') echo 'checked="checked"'; ?>> Other
             </div>
           </div>
           <div class="row">
