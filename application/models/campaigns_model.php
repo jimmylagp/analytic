@@ -38,17 +38,27 @@ class Campaigns_Model extends CI_Model{
 		)->num_rows();
 	}
 
-	function insert_campaign($name){
+	function insert_campaign($name, $user, $client){
 		$data = array(
 			'name' => $name,
-			'observations' => null,
+			'id_user' => $user,
 			'create_id' => 1,
 			'create_date' => date('Y-m-d H:i:s',now()),
 			'update_id' => 1,
-			'update_date' => date('Y-m-d H:i:s',now())
+			'update_date' => date('Y-m-d H:i:s',now()),
+			'id_client' => $client
 		);
+		$this->db->insert($this->table, $data);
 
-		return $this->db->insert($this->table, $data);
+		return $this->db->insert_id();
+	}
+
+	function insert_rel_campweb($id_camp, $id_web){
+		$data = array(
+			'id_camp' => $id_camp,
+			'id_web' => $id_web
+		);
+		$this->db->insert('camp_webs', $data);
 	}
 
 	function update_campaign($data){

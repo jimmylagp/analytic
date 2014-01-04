@@ -16,9 +16,9 @@
       <div class="large-9 columns">
         <ul class="inline-list">
           <li><a href="/" title="Home">Home</a></li>
-          <li><a href="/welcome/" title="My Profile">My Profile</a></li>
-          <li><a href="/" title="My Web Sites">My Web Sites</a></li>
-          <li><a href="/" title="My Campaigns">My Campaigns</a></li>
+          <li><a href="/" title="My Profile">My Profile</a></li>
+          <li><a href="/index.php/websites" title="My Web Sites">My Web Sites</a></li>
+          <li><a href="/index.php/campaigns" title="My Campaigns">My Campaigns</a></li>
           <li><a href="/index.php/welcome/logout" title="Logout">Logout</a></li>
         </ul>
       </div>

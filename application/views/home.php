@@ -100,6 +100,7 @@
               <input type="file" name="avatar">
             </div>
           </div>
+          <input type="hidden" name="picture" value="<?php echo $user->picture; ?>">
           <input type="submit" class="button" value="Update">
         </form>
       </div>

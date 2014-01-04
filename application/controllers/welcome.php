@@ -5,6 +5,7 @@ class Welcome extends Users_Controller {
 	public function index(){
 		if(!@$this->user) redirect('welcome/login');
 
+
 		$config = array(
 			'upload_path' => './pictures/',
 			'allowed_types' => 'gif|jpg|jpeg|png',
@@ -21,7 +22,7 @@ class Welcome extends Users_Controller {
 			if($this->form_validation->run() == true){
 
 				if(!$this->upload->do_upload('avatar')){
-					//$this->upload->display_errors();
+					$this->upload->display_errors();
 				}else {
 					$picture = $this->upload->data();
 				}
@@ -30,7 +31,7 @@ class Welcome extends Users_Controller {
 					'name' => !empty($_POST['name']) ? $_POST['name'] : '',
 					'last_name' => !empty($_POST['last_name']) ? $_POST['last_name'] : '',
 					'email' => $_POST['email'],
-					'picture' => !empty($picture['file_name']) ? $picture['file_name'] : '',
+					'picture' => !empty($picture['file_name']) ? $picture['file_name'] : $_POST['picture'],
 					'birthday' => !empty($_POST['birthday']) ? $_POST['birthday'] : null,
 					'gender' => !empty($_POST['gender']) ? $_POST['gender'] : '' ,
 					'city' => !empty($_POST['city']) ? $_POST['city'] : '',
@@ -43,9 +44,10 @@ class Welcome extends Users_Controller {
 			}
 		}
 
+		$duser = $this->users->get_profile_user($this->user->email);
 		$data = array(
 			'content' => 'home',
-			'user' => $this->users->get_profile_user($this->user->email)
+			'user' => $duser
 		);
 
 		$this->load->view('base', $data);

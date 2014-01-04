@@ -20,6 +20,15 @@ class Clients_Model extends CI_Model{
 		)->row();
 	}
 
+	function get_clients($id_user){
+		return $this->db->get_where(
+			$this->table,
+			array(
+				'id_user' => $id_user
+			)
+		)->result();
+	}
+
 	function get_client_name($id){
 		$this->db->select('name');
 		return $this->db->get_where(
@@ -30,16 +39,7 @@ class Clients_Model extends CI_Model{
 		)->row();
 	}
 
-	function insert_campaign($name){
-		$data = array(
-			'name' => $name,
-			'observations' => null,
-			'create_id' => 1,
-			'create_date' => date('Y-m-d H:i:s',now()),
-			'update_id' => 1,
-			'update_date' => date('Y-m-d H:i:s',now())
-		);
-
+	function insert_client($data){
 		return $this->db->insert($this->table, $data);
 	}
 
