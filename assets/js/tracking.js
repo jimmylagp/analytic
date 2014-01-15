@@ -1,5 +1,6 @@
 (function(){
-
+    
+    var response = null;
     var Tracking = {
         versionSearchString: "",
         
@@ -34,18 +35,27 @@
         },
 
         countryVisit: function(){
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://freegeoip.net/json/", true);
-            xhr.send(null);
-            xhr.onreadystatechange = function()
-            {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var response = JSON.parse(xhr.responseText);
+            var request = this.createCORSRequest("get", "http://freegeoip.net/json/");
+            if (request){
+                request.onload = function(){
+                    response = JSON.parse(request.responseText);
                     return response['country_name'];
-                } else {
-                    return xhr.status;
-                }
-            };
+                };
+                request.send();
+            }
+        },
+
+        createCORSRequest: function (method, url){
+            var xhr = new XMLHttpRequest();
+            if ("withCredentials" in xhr){
+                xhr.open(method, url, true);
+            } else if (typeof XDomainRequest != "undefined"){
+                xhr = new XDomainRequest();
+                xhr.open(method, url);
+            } else {
+                xhr = null;
+            }
+            return xhr;
         },
 
         getNames: function(data){
@@ -176,6 +186,7 @@
             }
         ]
     }
+
 
     var data  = {
         'url'      : Tracking.urlPage(),

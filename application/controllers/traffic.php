@@ -17,7 +17,7 @@ class Traffic extends Users_Controller {
 		if(!empty($_POST['data'])){
 			$tf = json_decode($_POST['data']);
 
-			print_r($_POST['data']);
+			print_r($_POST);
 
 			/*$data = array(
 				'url' => $tf->url,
