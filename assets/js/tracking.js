@@ -1,6 +1,5 @@
 (function(){
-    
-    var response = null;
+
     var Tracking = {
         versionSearchString: "",
         
@@ -10,7 +9,7 @@
         
         dateVisit: function(){
             var d = new Date();
-            return  d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+            return  d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
         },
 
         hourVisit: function(){
@@ -35,20 +34,21 @@
         },
 
         countryVisit: function(){
+            var response = "";
             var request = this.createCORSRequest("get", "http://freegeoip.net/json/");
             if (request){
-                request.onload = function(){
+                request.onloadend = function(){
                     response = JSON.parse(request.responseText);
-                    return response['country_name'];
                 };
                 request.send();
             }
+            return response['country_name'];
         },
 
         createCORSRequest: function (method, url){
             var xhr = new XMLHttpRequest();
             if ("withCredentials" in xhr){
-                xhr.open(method, url, true);
+                xhr.open(method, url, false);
             } else if (typeof XDomainRequest != "undefined"){
                 xhr = new XDomainRequest();
                 xhr.open(method, url);
@@ -199,17 +199,17 @@
         'website'  : _at,
     };
 
-    var params = "data=" + JSON.stringify(data);
+    var params = JSON.stringify(data);
 
     var xhp = new XMLHttpRequest();
     xhp.open("POST", "http://analytic:8888/index.php/traffic/", true);
-    xhp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhp.onreadystatechange = function() {
         if(xhp.readyState == 4 && xhp.status == 200) {
             console.log("OK");
         }
     }
     xhp.send(params);
-    
+
     console.log(xhp);
 })(_at);

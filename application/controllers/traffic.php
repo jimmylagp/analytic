@@ -14,12 +14,14 @@ class Traffic extends Users_Controller {
 		//redirect('welcome/login');
 		$response = null;
 
-		if(!empty($_POST['data'])){
-			$tf = json_decode($_POST['data']);
+		$post = file_get_contents("php://input");
 
-			print_r($_POST);
+		print_r($post);
 
-			/*$data = array(
+		if(!empty($post)){
+			$tf = json_decode($post);
+
+			$data = array(
 				'url' => $tf->url,
 				'browser' => $tf->browser,
 				'operating_system' => $tf->os,
@@ -30,14 +32,14 @@ class Traffic extends Users_Controller {
 				'id_website' => $this->encrypt->decode($tf->website)
 			);
 
-			//$this->traffic->insert_traffic($data);
+			$this->traffic->insert_traffic($data);
 
 			$response = array(
 				'message' => 'Traffic has been added',
 				'error_code' => 1
 			);
 
-			//print(json_decode($response));*/
+			print(json_encode($response));
 		}else {
 			$response = array(
 				'message' => 'Error method not found',

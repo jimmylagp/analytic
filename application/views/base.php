@@ -14,6 +14,7 @@
         <h1><a href="/" title="ANALYTIC">ANALYTIC</a></h1>
       </div>
       <div class="large-9 columns">
+        <br>
         <ul class="inline-list">
           <li><a href="/" title="Home">Home</a></li>
           <li><a href="/" title="My Profile">My Profile</a></li>
@@ -38,14 +39,13 @@
       $(document).foundation();
     </script>
     <script type="text/javascript">
-
-      var _at = "/E8fVnRBUImnfsqitIvmRFBqvWvr5p4vVy6f1MyLUag/C+Su4y2wjboVES1yADNEooy70MBFb+3KDZQ1R4I4yw==";
+      /*var _at = '6ITWUDQXHYYjbcTX9pmbsEH80pqqcXjURyskoPlmEJtSoFZiC1ppz6a6Uq/+U0hIIY3zHNEK6FMwAOSUtyrLlw==';
 
       (function() {
         var at = document.createElement('script'); at.type = 'text/javascript'; at.async = true;
         at.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://') + 'analytic:8888/assets/js/tracking.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(at, s);
-      })();
-    </script>    
+      })();*/
+    </script>
   </body>
 </html>

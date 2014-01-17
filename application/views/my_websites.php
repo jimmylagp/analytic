@@ -26,17 +26,17 @@
                 <textarea>
                   &#60;script type="text/javascript"&#62;
 
-                    var _at = "<?php echo $encrypts->encode(@$value->id); ?>";
+                    var _at = '<?php echo $encrypts->encode(@$value->id); ?>';
 
                     (function() {
                       var at = document.createElement('script'); at.type = 'text/javascript'; at.async = true;
-                      at.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://') + '.analytic:8888/assets/js/tracking.js';
+                      at.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://') + 'analytic:8888/assets/js/tracking.js';
                       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(at, s);
                     })();
                   &#60;/script&#62;
                 </textarea>
               </td>
-              <td><a href="#" class="button tiny" title="Show me">Show me</a></td>
+              <td><a href="<?php echo $_SERVER['PHP_SELF'];  ?>/show_website/<?php echo @$value->id; ?>" class="button tiny" title="Show me">Show me</a></td>
             </tr>
             <?php } ?>
           </tbody>
