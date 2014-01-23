@@ -48,25 +48,41 @@ class Websites extends Users_Controller {
 		$this->load->view('base', $data);
 	}
 
-	public function scraping(){
-		$url  = 'http://www.google.com.mx/search?hl=en&safe=active&tbo=d&site=&source=hp&q=estructura+basica+de+un+documento+html5&oq=estructura+basica+de+un+documento+html5';
-		$html = file_get_html($url);
+	private function scraping($argument, $domain){
+		$position = 0;
+		$i = 1;
+		$page = 0;
 
-		$linkObjs = $html->find('h3.r a');
-		foreach ($linkObjs as $linkObj) {
-		    $title = trim($linkObj->plaintext);
-		    $link  = trim($linkObj->href);
-		    
-		    // if it is not a direct link but url reference found inside it, then extract
-		    if (!preg_match('/^https?/', $link) && preg_match('/q=(.+)&amp;sa=/U', $link, $matches) && preg_match('/^https?/', $matches[1])) {
-		        $link = $matches[1];
-		    } else if (!preg_match('/^https?/', $link)) { // skip if it is not a valid link
-		        continue;    
-		    }
-		    
-		    echo '<p>Titulo: ' . $title . '<br />';
-		    echo 'Enlace: ' . $link . '</p>';    
+		$argument = str_replace(" ","+",$argument);
+		while($position == 0 && $i < 31){
+			$url  = 'http://www.google.com.mx/search?hl=en&safe=active&tbo=d&site=&source=hp&q='.$argument.'&oq='.$argument.'&start='.$page;
+			
+			$html = file_get_html($url);
+
+			$linkObjs = $html->find('h3.r a');
+
+			foreach ($linkObjs as $linkObj) {
+			    $link  = trim($linkObj->href);
+			    
+			    // if it is not a direct link but url reference found inside it, then extract
+			    if (!preg_match('/^https?/', $link) && preg_match('/q=(.+)&amp;sa=/U', $link, $matches) && preg_match('/^https?/', $matches[1])) {
+			        $link = $matches[1];
+			    } else if (!preg_match('/^https?/', $link)) { // skip if it is not a valid link
+			        continue;    
+			    }
+
+			    if(strpos($link, $domain) !== FALSE){
+			    	$position = $i;
+			    	break;
+			    }
+			    $i++;
+			}
+
+			$page = ($i-1);
+			sleep(2);
 		}
+
+		return $position;
 	}
 	
 }
