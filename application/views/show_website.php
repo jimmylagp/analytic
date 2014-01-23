@@ -1,7 +1,7 @@
 
     <div class="row">
-      <div class="small-4 large-centered columns">
-        <h2>My Websites</h2>
+      <div class="small-5 large-centered columns">
+        <h2>Activity of the Website</h2>
       </div>
     </div>
 
@@ -13,7 +13,7 @@
     
     <div class="row">
       <div class="large-12 columns">
-        <p>Here you can see the total visits on this year and per filtered.</p>
+        <p>Details of traffic:</p>
         
         <dl class="tabs" data-tab>
           <dd class="active"><a href="#panel2-1">Browser</a></dd>
@@ -22,7 +22,7 @@
           <dd><a href="#panel2-4">Language</a></dd>
         </dl>
         <div class="tabs-content row">
-          <div class="content active small-10 large-centered columns" id="panel2-1">
+          <div class="content active small-6 large-centered columns" id="panel2-1">
             <table width="100%">
               <thead>
                 <tr>
@@ -40,7 +40,7 @@
               </tbody>
             </table>
           </div>
-          <div class="content small-10 large-centered columns" id="panel2-2">
+          <div class="content small-6 large-centered columns" id="panel2-2">
             <table width="100%">
               <thead>
                 <tr>
@@ -58,7 +58,7 @@
               </tbody>
             </table>
           </div>
-          <div class="content small-10 large-centered columns" id="panel2-3">
+          <div class="content small-6 large-centered columns" id="panel2-3">
             <table width="100%">
               <thead>
                 <tr>
@@ -76,7 +76,7 @@
               </tbody>
             </table>
           </div>
-          <div class="content small-10 large-centered columns" id="panel2-4">
+          <div class="content small-6 large-centered columns" id="panel2-4">
             <table width="100%">
               <thead>
                 <tr>
@@ -95,12 +95,47 @@
             </table>
           </div>
         </div>
-
+        
+        <div class="row">
+          <div class="large-8 columns">
+            <p>Position of the website in Google México:</p>
+            <table width="100%">
+              <thead>
+                <tr>
+                  <th width="60%">Argument</th>
+                  <th width="15%">Postion</th>
+                  <th width="25%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($arguments as $key => $value) { ?>
+                <tr>
+                  <td><?php echo $value->argument; ?></td>
+                  <td><?php echo $value->position; ?></td>
+                  <td>
+                    <a href="#" class="button tiny">Update</a>
+                    <a href="#" class="button tiny">Delete</a>
+                  </td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+          <div class="large-4 columns">
+            <p>Add new search argument:</p>
+            <form id="add-sargument" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+              <span class="secondary radius label hide">Please wait, calculating position...</span>
+              <input type="text" name="argument" placeholder="Write here your search argument....">
+              <input type="submit" value="Add" class="button small" disabled>
+            </form>
+          </div>
+        </div>
         
         <a href="/index.php/campaigns/create_campaign" title="Create a New Campaign" class="button left">Create a New Campaign</a>
         <a href="/index.php/clients/" title="My Clients" class="button right">My Clients</a>
       </div>
     </div>
+
     <?php 
     $stepw = array();
     foreach ($traffic as $key => $value) {
@@ -138,4 +173,3 @@
 
       var myLine = new Chart(document.getElementById("line-chart").getContext("2d")).Line(lineChartData, options);
     </script>
-    <script src="/assets/js/app.js"></script>

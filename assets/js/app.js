@@ -21,3 +21,25 @@ window.addEventListener('resize', (function() {
 }), false);
 
 resizeChart();
+
+
+$('#add-sargument input[type="text"]').on('keyup', function(){
+  if ($(this).val() == "") {
+    $('#add-sargument input[type="submit"]').attr("disabled", "disabled");
+  }else{
+    $('#add-sargument input[type="submit"]').removeAttr("disabled");
+  }
+});
+
+$('#add-sargument input[type="submit"]').on('click', function(){
+  $('#add-sargument span').removeClass("hide");
+  
+  $.post($('#add-sargument').attr("action"), { argument: $('#add-sargument input[type="text"]').val() }, function(data,status){
+    if(status == 'success'){
+      $('#add-sargument span').addClass("hide");
+      $('#add-sargument input[type="text"]').val("");
+    }
+  });
+
+  return false;
+});

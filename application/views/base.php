@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analytic</title>
     <link rel="stylesheet" href="/assets/css/foundation.css" />
+    <link rel="stylesheet" href="/assets/css/app.css" />
     <script src="/assets/js/modernizr.js"></script>
   </head>
   <body>
@@ -35,6 +36,7 @@
     
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/foundation.min.js"></script>
+    <script src="/assets/js/app.js"></script>
     <script>
       $(document).foundation();
     </script>

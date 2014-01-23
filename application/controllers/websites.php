@@ -9,6 +9,7 @@ class Websites extends Users_Controller {
 		$this->load->model('users');
 		$this->load->model('webs_model', 'webs');
 		$this->load->model('traffic_model', 'traffic');
+		$this->load->model('sarguments_model', 'sargument');
 		$this->load->library('simple_html_dom');
 	}
 
@@ -41,11 +42,25 @@ class Websites extends Users_Controller {
 			'browsers' => $this->traffic->get_traffic_by($user->id, $id, 'browser'),
 			'os' => $this->traffic->get_traffic_by($user->id, $id, 'operating_system'),
 			'country' => $this->traffic->get_traffic_by($user->id, $id, 'country'),
-			'language' => $this->traffic->get_traffic_by($user->id, $id, 'language')
+			'language' => $this->traffic->get_traffic_by($user->id, $id, 'language'),
+			'arguments' => $this->sargument->get_sarguments_web($id)
+		);
+		$this->load->view('base', $data);
+
+		if(!empty($_POST['argument'])){
+			$this->add_sargument($id, $_POST['argument']);
+		}
+	}
+
+	private function add_sargument($id, $argument){
+		
+		$data = array(
+			'argument' => $argument,
+			'position' => $this->scraping($argument, $this->webs->get_web_url($id)),
+			'id_web'   => $id
 		);
 
-
-		$this->load->view('base', $data);
+		$this->sargument->insert_sargument($data);
 	}
 
 	private function scraping($argument, $domain){
