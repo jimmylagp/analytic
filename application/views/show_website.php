@@ -27,7 +27,7 @@
               <thead>
                 <tr>
                   <th width="80%">Browser</th>
-                  <th width="20%">%</th>
+                  <th width="20%">Visits</th>
                 </tr>
               </thead>
               <tbody>
@@ -45,7 +45,7 @@
               <thead>
                 <tr>
                   <th width="80%">OS</th>
-                  <th width="20%">%</th>
+                  <th width="20%">Visits</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,7 +63,7 @@
               <thead>
                 <tr>
                   <th width="80%">Country</th>
-                  <th width="20%">%</th>
+                  <th width="20%">Visits</th>
                 </tr>
               </thead>
               <tbody>
@@ -81,7 +81,7 @@
               <thead>
                 <tr>
                   <th width="80%">Language</th>
-                  <th width="20%">%</th>
+                  <th width="20%">Visits</th>
                 </tr>
               </thead>
               <tbody>
@@ -99,7 +99,7 @@
         <div class="row">
           <div class="large-8 columns">
             <p>Position of the website in Google México:</p>
-            <table width="100%">
+            <table id="arguments" width="100%">
               <thead>
                 <tr>
                   <th width="60%">Argument</th>
@@ -109,12 +109,12 @@
               </thead>
               <tbody>
                 <?php foreach ($arguments as $key => $value) { ?>
-                <tr>
-                  <td><?php echo $value->argument; ?></td>
+                <tr class="argument">
+                  <td contenteditable="true"><?php echo $value->argument; ?></td>
                   <td><?php echo $value->position; ?></td>
                   <td>
-                    <a href="#" class="button tiny">Update</a>
-                    <a href="#" class="button tiny">Delete</a>
+                    <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="button tiny update" data-id="<?php echo $value->id; ?>">Update</a>
+                    <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="button tiny delete" data-id="<?php echo $value->id; ?>">Delete</a>
                   </td>
                 </tr>
                 <?php } ?>

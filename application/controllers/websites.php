@@ -47,11 +47,22 @@ class Websites extends Users_Controller {
 		);
 		$this->load->view('base', $data);
 
+
 		if(!empty($_POST['argument'])){
 			$this->add_sargument($id, $_POST['argument']);
 		}
+
+		if(!empty($_POST['up_argument']) and !empty($_POST['id_argument'])){
+			$this->update_sargument($id, $_POST['id_argument'], $_POST['up_argument']);
+		}
+
+		if(!empty($_POST['id_argument_delete'])){
+			$this->delete_sargument($_POST['id_argument']);
+		}
 	}
 
+
+	/*Functions*/
 	private function add_sargument($id, $argument){
 		
 		$data = array(
@@ -61,6 +72,20 @@ class Websites extends Users_Controller {
 		);
 
 		$this->sargument->insert_sargument($data);
+	}
+
+	private function update_sargument($id_web, $id_argument, $argument){
+		$data = array(
+			'id' 	   => $id_argument,
+			'argument' => $argument,
+			'position' => $this->scraping($argument, $this->webs->get_web_url($id_web))
+		);
+
+		$this->sargument->update_sargument($data);
+	}
+
+	private function delete_sargument($id_argument){
+		$this->sargument->delete_sargument($id_argument);
 	}
 
 	private function scraping($argument, $domain){

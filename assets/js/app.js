@@ -23,6 +23,8 @@ window.addEventListener('resize', (function() {
 resizeChart();
 
 
+/*Functionality*/
+
 $('#add-sargument input[type="text"]').on('keyup', function(){
   if ($(this).val() == "") {
     $('#add-sargument input[type="submit"]').attr("disabled", "disabled");
@@ -40,6 +42,32 @@ $('#add-sargument input[type="submit"]').on('click', function(){
       $('#add-sargument input[type="text"]').val("");
     }
   });
+
+  return false;
+});
+
+$('#arguments a.update').on('click', function(){
+  var link = $(this);
+  var text = $(this).parents('tr').children('td').first().html();
+  $(this).parents('tr').children('td').first().html( text + " (Please wait...)" );
+
+  $.post( 
+    $(this).attr("href"), 
+    { up_argument: text, id_argument: $(this).attr("data-id") }, 
+    function(data,status){
+      
+      if(status == 'success'){
+        link.parents('tr').children('td').first().html(text);
+      }
+
+    }
+  );
+
+  return false;
+});
+
+$('a.deletes').on('click', function(){
+  console.log(1);
 
   return false;
 });

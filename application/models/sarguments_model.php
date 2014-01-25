@@ -26,7 +26,7 @@ class SArguments_Model extends CI_Model{
 	}
 
 	function get_sarguments_web($id_web){
-		$this->db->select('argument, position');
+		$this->db->select('id, argument, position');
 		$this->db->from('search_arguments');
 		$this->db->where('id_web', $id_web);
 		$query = $this->db->get();
@@ -41,6 +41,10 @@ class SArguments_Model extends CI_Model{
 	function update_sargument($data){
 		$this->db->where('id', $data['id']);
 		return $this->db->update($this->table, $data);
+	}
+
+	function delete_sargument($id){
+		return $this->db->delete($this->table, array( 'id' => $id));
 	}
 
 }
