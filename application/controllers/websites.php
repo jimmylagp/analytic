@@ -57,7 +57,7 @@ class Websites extends Users_Controller {
 		}
 
 		if(!empty($_POST['id_argument_delete'])){
-			$this->delete_sargument($_POST['id_argument']);
+			$this->delete_sargument($_POST['id_argument_delete']);
 		}
 	}
 

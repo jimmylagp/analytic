@@ -33,18 +33,23 @@ $('#add-sargument input[type="text"]').on('keyup', function(){
   }
 });
 
+
 $('#add-sargument input[type="submit"]').on('click', function(){
+  var text = $('#add-sargument input[type="text"]').val();
   $('#add-sargument span').removeClass("hide");
   
-  $.post($('#add-sargument').attr("action"), { argument: $('#add-sargument input[type="text"]').val() }, function(data,status){
+  $.post($('#add-sargument').attr("action"), { argument: text }, function(data,status){
     if(status == 'success'){
       $('#add-sargument span').addClass("hide");
       $('#add-sargument input[type="text"]').val("");
+
+      location.reload();
     }
   });
 
   return false;
 });
+
 
 $('#arguments a.update').on('click', function(){
   var link = $(this);
@@ -66,8 +71,23 @@ $('#arguments a.update').on('click', function(){
   return false;
 });
 
-$('a.deletes').on('click', function(){
-  console.log(1);
+$('#arguments a.delete').on('click', function(){
+  var link = $(this);
+  var row = $(this).parents('tr');
+
+  if(confirm('Really delete this argument?')){
+    $.post( 
+      $(this).attr("href"), 
+      { id_argument_delete: $(this).attr("data-id") }, 
+      function(data,status){
+        
+        if(status == 'success'){
+          row.remove();
+        }
+
+      }
+    );
+  }
 
   return false;
 });
