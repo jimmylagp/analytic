@@ -17,17 +17,28 @@ class Websites extends Users_Controller {
 		if(!@$this->user) redirect('welcome/login');
 
 		$user = $this->users->get_profile_user($this->user->email);
-		$webs = $this->webs->get_web_traffic($user->id);
+		$webs = $this->webs->get_web_by_user($user->id);
 
 		$CI =& get_instance();
 		$CI->load->library('encrypt');
 
-		$data = array(
+		$websites = array();
+
+		foreach ($webs as $key => $value) {
+			$websites[] = array(
+				'domain' => $value->address,
+				'visits' => $this->traffic->get_total_traffic($value->id),
+				'id_web' => $value->id
+  			);
+		}
+
+		$datas = array(
 			'content' => 'my_websites',
-			'websites' => $webs,
+			'websites' => $websites,
 			'encrypts' => $CI->encrypt
 		);
-		$this->load->view('base', $data);
+
+		$this->load->view('base', $datas);
 	}
 
 	public function show_website($id){
@@ -61,6 +72,10 @@ class Websites extends Users_Controller {
 		}
 	}
 
+	public function delete_website($id){
+		$this->webs->delete_web($id);
+		redirect('/websites', 'refresh');
+	}
 
 	/*Functions*/
 	private function add_sargument($id, $argument){

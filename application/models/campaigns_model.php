@@ -66,4 +66,14 @@ class Campaigns_Model extends CI_Model{
 		return $this->db->update($this->table, $data);
 	}
 
+	function delete_campaign($id){
+		$id_web = $this->db->get_where('camp_webs', array('id_camp' => $id), 1)->row();
+		
+		$this->db->delete('campaigns', array('id' => $id));
+
+		$this->db->delete('websites', array('id' => $id_web->id_web));
+		$this->db->delete('camp_webs', array('id_web' => $id_web->id_web));
+		$this->db->delete('traffic', array('id_website' => $id_web->id_web));
+	}
+
 }

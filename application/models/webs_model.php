@@ -35,10 +35,9 @@ class Webs_Model extends CI_Model{
 		)->row();
 	}
 
-	function get_web_traffic($user){
-		$this->db->select('websites.address, websites.id, COUNT(traffic.id_website) as visits');
+	function get_web_by_user($user){
+		$this->db->select('websites.address, websites.id');
 		$this->db->from('websites');
-		$this->db->join('traffic', 'websites.id = traffic.id_website');
 		$this->db->join('camp_webs', 'camp_webs.id_web = websites.id');
 		$this->db->join('campaigns', 'campaigns.id = camp_webs.id_camp');
 		$this->db->where('campaigns.id_user', $user);
@@ -64,6 +63,12 @@ class Webs_Model extends CI_Model{
 	function update_web($data){
 		$this->db->where('id', $data['id']);
 		return $this->db->update($this->table, $data);
+	}
+
+	function delete_web($id){
+		$this->db->delete('websites', array('id' => $id));
+		$this->db->delete('camp_webs', array('id_web' => $id));
+		$this->db->delete('traffic', array('id_website' => $id));
 	}
 
 }

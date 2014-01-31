@@ -17,8 +17,10 @@ class Campaigns extends Users_Controller {
 
 		$camp = $this->campaigns->get_campaigns_id($id_user->id);
 		foreach ($camp as $key => $val) {
+			$campname = $this->campaigns->get_campaigns_name($val->id);
 			$campaigns[] = array(
-				'name' => $this->campaigns->get_campaigns_name($val->id)[0]->name,
+				'id' => $val->id,
+				'name' => $campname[0]->name,
 				'client' => !empty($this->clients->get_client_name($val->id_client)->name) ? $this->clients->get_client_name($val->id_client)->name : '',
 				'webs' => $this->campaigns->get_campaigns_web($val->id)
 			);
@@ -27,7 +29,6 @@ class Campaigns extends Users_Controller {
 			'content' => 'my_campaigns',
 			'campaigns' => @$campaigns
 		);
-
 		$this->load->view('base', $data);
 	}
 
@@ -61,6 +62,12 @@ class Campaigns extends Users_Controller {
 		}
 
 		$this->load->view('base', $data);
+	}
+
+	public function delete_campaign($id){
+		$this->campaigns->delete_campaign($id);
+		
+		redirect('/campaigns', 'refresh');
 	}
 	
 }

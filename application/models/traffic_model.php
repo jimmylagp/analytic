@@ -29,6 +29,12 @@ class Traffic_Model extends CI_Model{
 		)->result();
 	}
 
+	function get_total_traffic($id_website){
+		$this->db->select('COUNT(id) as visits');
+		$query = $this->db->get_where($this->table,array('id_website' => $id_website));
+		return $query->row()->visits;
+	}
+
 	function get_traffic_date($date){
 		return $this->db->get_where(
 			$this->table,

@@ -103,7 +103,7 @@
               <thead>
                 <tr>
                   <th width="60%">Argument</th>
-                  <th width="15%">Postion</th>
+                  <th width="15%">Position</th>
                   <th width="25%"></th>
                 </tr>
               </thead>

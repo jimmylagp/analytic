@@ -202,7 +202,7 @@
     var params = JSON.stringify(data);
 
     var xhp = new XMLHttpRequest();
-    xhp.open("POST", "http://analytic:8888/index.php/traffic/", true);
+    xhp.open("POST", "/index.php/traffic/", true);
     xhp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhp.onreadystatechange = function() {
         if(xhp.readyState == 4 && xhp.status == 200) {
